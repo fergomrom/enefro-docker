@@ -1,0 +1,19 @@
+aplicacion:
+  build: contenedor-tomcat
+  links:
+    - database:db
+datos:
+  image: ubuntu:14.04
+  volumes:
+    - /var/lib/postgresql/data
+  command: "echo Datos"
+database:
+  build: contenedor-postgres
+  volumes_from:
+    - datos
+proxy:
+  build: contenedor-proxy
+  links:
+    - aplicacion 
+  ports:
+    - "80:80"
